@@ -1,56 +1,60 @@
 -- =====================================================
 -- Winnipeg Transit Redesign Analysis
--- SQL validation & aggregation queries
+-- SQL aggregation & validation queries
+-- =====================================================
+-- I used SQL to validate the results given by PowerBI reporting tools
 -- =====================================================
 
--- Q1: How did overall transit activity change after the redesign?
--- Events per hour (normalised)
+
+-- =====================================================
+-- Q1. Did overall transit activity change after the redesign?
+-- High-level comparison of total activity (normalized)
+-- =====================================================
 
 SELECT
-    Hour,
     RedesignPeriod,
-    SUM(NormWeight) AS events_per_hour
+    SUM(NormWeight) AS total_activity
 FROM events_cleaned
-GROUP BY Hour, RedesignPeriod
-ORDER BY Hour, RedesignPeriod;
+GROUP BY RedesignPeriod;
 
 
--- Q2: Did evening / off-peak service improve?
+-- =====================================================
+-- Q2. Did evening and off-peak usage change after the redesign?
+-- Evaluates City claims about improved evening service
+-- =====================================================
 
 SELECT
     IsEvening,
     RedesignPeriod,
-    SUM(NormWeight) AS events
+    SUM(NormWeight) AS activity
 FROM events_cleaned
 GROUP BY IsEvening, RedesignPeriod
 ORDER BY IsEvening, RedesignPeriod;
 
 
--- Q3a: Did reliability improve? (Average headway)
+-- =====================================================
+-- Q3. Did the redesign reduce extremely low-activity periods
+--     ("dead zones")?
+-- Dead zones are proxied using long headways (>20 minutes)
+-- =====================================================
 
 SELECT
     RedesignPeriod,
-    AVG(HeadwayMin) AS avg_headway_min
-FROM headway
-GROUP BY RedesignPeriod;
-
-
--- Q3b: Long headways (>20 minutes)
-
-SELECT
-    RedesignPeriod,
-    COUNT(*) AS long_headway_count
+    COUNT(*) AS long_gap_count
 FROM headway
 WHERE HeadwayMin > 20
 GROUP BY RedesignPeriod;
 
 
--- Q4: Where did service improve or worsen? (By stop)
+-- =====================================================
+-- Q4. Did off-peak usage change more than peak usage?
+-- Compares shifts in activity between peak and off-peak periods
+-- =====================================================
 
 SELECT
-    stop_id,
+    TimePeriod,
     RedesignPeriod,
-    SUM(NormWeight) AS events_per_stop
+    SUM(NormWeight) AS activity
 FROM events_cleaned
-GROUP BY stop_id, RedesignPeriod
-ORDER BY stop_id, events_per_stop DESC;
+GROUP BY TimePeriod, RedesignPeriod
+ORDER BY TimePeriod, RedesignPeriod;
