@@ -76,8 +76,6 @@ Compares shifts between peak and off-peak periods to understand where changes we
 The dashboard summarises results using a small set of high-level KPIs:
 
 - **Total Scheduled Activity**
-- **Evening Activity**
-- **Peak Activity**
 - **Number of Long Headways (>20 min)**
 
 These KPIs are designed to provide quick context before exploring the supporting visuals.
