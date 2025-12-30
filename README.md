@@ -1,75 +1,122 @@
-
-# Winnipeg Transit Analytics Dashboard using Power BI
+# Winnipeg Transit Redesign Analysis — Power BI Dashboard
 
 ## Overview
-This project is an exploratory **Power BI analytics dashboard** built using publicly available **Winnipeg Transit** data. I created it as a portfolio project to demonstrate my familiarity with Power BI, including data preparation, KPI creation, and building interactive dashboards that focus on clear, meaningful insights.
 
-Rather than trying to judge policy decisions or prove causation-type relations, the goal here is to explore **high-level usage patterns** and show how they changed around Winnipeg Transit’s recent system redesign.
+This project is an end-to-end analytics dashboard built using publicly available Winnipeg Transit data.  
+It was created as a portfolio project to demonstrate practical data analytics skills across **Python, SQL, and Power BI**, with a focus on **clear, decision-oriented reporting** rather than raw data exploration.
+
+The analysis examines how scheduled transit activity and service regularity changed **before vs after Winnipeg Transit’s system redesign**, using a small set of realistic, well-defined questions.
 
 ---
 
 ## Why this project
-I built this project primarily to showcase practical **analytics and power BI skills** for reporting and analytics roles. It reflects how Power BI is commonly used in real analytics settings: starting from raw data, defining useful questions, and presenting insights in a clear, interactive way.
+
+This project mirrors how analytics work is typically done in practice:
+
+- Start from raw data
+- Clean and prepare it using scripting tools
+- Validate results using SQL
+- Build a clear, interpretable dashboard for stakeholders
+
+Rather than attempting to evaluate policy decisions or prove causation, the goal is to **surface high-level patterns** that help frame discussion around service changes.
 
 ---
 
-## Dataset
-- **Source:** Publicly available Winnipeg Transit data 
-- **Type:** Historical transit activity records  
+## Data & Preparation
 
-Exact time ranges are intentionally not emphasised, as the focus of this project is on analytical techniques and dashboard design rather than operational reporting.
+**Data source**
+- Publicly available Winnipeg Transit schedule data (GTFS-style files)
 
----
+**Preparation workflow**
+1. **Python (Pandas)**
+   - Combined pre- and post-redesign datasets
+   - Standardised time formats
+   - Created derived features such as:
+     - Hour of day
+     - Peak vs off-peak period
+     - Evening indicator
+   - Computed service headways (time gaps between scheduled events)
+   - Exported cleaned datasets for downstream use
 
-## Questions the dashboard explores
-The dashboard focuses on a small set of realistic, data-driven questions:
+2. **SQL (SQLite)**
+   - Loaded cleaned datasets into a relational database
+   - Wrote validation and aggregation queries to:
+     - Compare pre vs post activity
+     - Analyse evening/off-peak usage
+     - Identify long service gaps (“dead zones”)
+   - Verified that SQL results matched Power BI measures
 
-1. **Did overall transit activity change after the system redesign?**  
-   A high-level comparison of total activity before and after the redesign.
-
-2. **Did evening and weekend usage change after the redesign?**  
-   This relates directly to City claims about improved off-peak service and ongoing public discussion around weekend and evening transit availability.
-
-3. **Did the redesign reduce extremely low-activity periods (“dead zones”)?**  
-   An exploratory look at whether very low-usage periods became less frequent, reflecting common rider concerns about service gaps.
-
-4. **Did off-peak usage change more than peak usage?**  
-   A comparison of changes during peak versus off-peak periods to understand where usage shifts were most noticeable.
-
----
-
-## KPIs
-To summarize the data at a glance, the dashboard includes a small set of high-level KPIs:
-- Total transit records
-- Average records per day
-- Peak activity period
-- Share of activity during evenings and weekends
+3. **Power BI**
+   - Built a semantic model using cleaned datasets
+   - Defined KPIs and measures using DAX
+   - Created a single-page dashboard focused on interpretability
 
 ---
 
-## Tools & techniques
+## Questions explored
+
+The dashboard answers four core questions:
+
+### 1. Did overall transit activity change after the redesign?
+A high-level comparison of scheduled activity before vs after the system redesign.
+
+### 2. Did evening and off-peak usage change?
+Examines whether activity increased outside traditional peak hours, reflecting public discussion around improved evening service.
+
+### 3. Did the redesign reduce long service gaps (“dead zones”)?
+Uses long headways (>20 minutes) as a proxy for low-service periods.
+
+### 4. Did off-peak usage change more than peak usage?
+Compares shifts between peak and off-peak periods to understand where changes were most pronounced.
+
+---
+
+## Key KPIs
+
+The dashboard summarises results using a small set of high-level KPIs:
+
+- **Total Scheduled Activity**
+- **Evening Activity**
+- **Peak Activity**
+- **Number of Long Headways (>20 min)**
+
+These KPIs are designed to provide quick context before exploring the supporting visuals.
+
+---
+
+## Dashboard
+
+> *Screenshot of the final Power BI dashboard*
+
+![Winnipeg Transit Redesign Dashboard](dashboard.png)
+
+**Design choices**
+- Single-page layout
+- KPI cards for quick summary
+- Bar charts for clear pre/post comparisons
+- Consistent colour mapping across visuals
+
+---
+
+## Tools & Technologies
+
+- **Python (Pandas)** — data cleaning, feature engineering, headway calculation  
+- **SQL (SQLite)** — aggregation, validation, and cross-checking results  
 - **Power BI**
-- **Power Query** for data cleaning and transformation
-- **DAX** for measures and KPIs
-- Time-based segmentation (peak vs off-peak, weekday vs weekend)
-- Interactive filters and visuals
+  - Power Query for ingestion
+  - DAX for KPIs and measures
+  - Interactive visuals for reporting
 
 ---
 
-## Design approach
-The dashboard is designed to be simple and easy to interpret:
-- A single-page layout
-- KPI cards at the top for quick context
-- Supporting visuals that explain trends and distributions
-- Minimal assumptions, so the analysis remains robust despite route and stop changes
+## Notes & limitations
 
----
-
-## Important note
-This analysis is **exploratory**. It focuses on identifying broad patterns in the data rather than evaluating service quality or making causal claims. The results should be interpreted as descriptive trends, not definitive conclusions.
+- This analysis is **exploratory and descriptive**
+- It does not attempt to measure ridership, demand, or service quality directly
+- Results reflect scheduled service patterns, not observed passenger behaviour
 
 ---
 
 ## About me
-Computer Science student at the University of Manitoba with interests in data science, analytics, AI/ML, and scalable software systems.
 
+Computer Science student at the University of Manitoba with interests in data analytics, data science, AI/ML, and scalable software systems.
