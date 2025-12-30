@@ -88,7 +88,7 @@ These KPIs are designed to provide quick context before exploring the supporting
 
 > *Screenshot of the final Power BI dashboard*
 
-![Winnipeg Transit Redesign Dashboard](dashboard.png)
+![Winnipeg Transit Redesign Dashboard](Dashboard.png)
 
 **Design choices**
 - Single-page layout
